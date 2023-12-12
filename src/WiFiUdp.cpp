@@ -21,7 +21,7 @@
 
 #include "utility/WiFiSocket.h"
 
-#include "WiFi101.h"
+#include "WiFi101Leafony.h"
 #include "WiFiUdp.h"
 
 /* Constructor. */

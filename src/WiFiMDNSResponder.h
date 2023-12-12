@@ -24,7 +24,7 @@
 #ifndef WIFIMDNSRESPONDER_H
 #define WIFIMDNSRESPONDER_H
 
-#include "WiFi101.h"
+#include "WiFi101Leafony.h"
 #include "WiFiUdp.h"
 
 class WiFiMDNSResponder {
