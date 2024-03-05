@@ -1,20 +1,20 @@
 /*
-  WiFi.h - Library for Arduino Wifi shield.
-  Copyright (c) 2011-2014 Arduino.  All right reserved.
+	WiFi.h - Library for Arduino Wifi shield.
+	Copyright (c) 2011-2014 Arduino.  All right reserved.
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
 
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #ifndef WIFI_H
@@ -28,15 +28,17 @@
 
 #include <Arduino.h>
 
-extern "C" {
-	#include "driver/include/m2m_wifi.h"
+extern "C"
+{
+#include "driver/include/m2m_wifi.h"
 }
 
 #include "WiFiClient.h"
 #include "WiFiSSLClient.h"
 #include "WiFiServer.h"
 
-typedef enum {
+typedef enum
+{
 	WL_NO_SHIELD = 255,
 	WL_IDLE_STATUS = 0,
 	WL_NO_SSID_AVAIL,
@@ -53,8 +55,9 @@ typedef enum {
 } wl_status_t;
 
 /* Encryption modes */
-enum wl_enc_type {  /* Values map to 802.11 encryption suites... */
-	ENC_TYPE_WEP  = M2M_WIFI_SEC_WEP,
+enum wl_enc_type
+{ /* Values map to 802.11 encryption suites... */
+	ENC_TYPE_WEP = M2M_WIFI_SEC_WEP,
 	ENC_TYPE_TKIP = M2M_WIFI_SEC_WPA_PSK,
 	ENC_TYPE_CCMP = M2M_WIFI_SEC_802_1X,
 	/* ... except these two, 7 and 8 are reserved in 802.11-2007 */
@@ -62,14 +65,16 @@ enum wl_enc_type {  /* Values map to 802.11 encryption suites... */
 	ENC_TYPE_AUTO = M2M_WIFI_SEC_INVALID
 };
 
-typedef enum {
+typedef enum
+{
 	WL_RESET_MODE = 0,
 	WL_STA_MODE,
 	WL_PROV_MODE,
 	WL_AP_MODE
 } wl_mode_t;
 
-typedef enum {
+typedef enum
+{
 	WL_PING_DEST_UNREACHABLE = -1,
 	WL_PING_TIMEOUT = -2,
 	WL_PING_UNKNOWN_HOST = -3,
@@ -84,8 +89,8 @@ public:
 	void setPins(int8_t cs, int8_t irq, int8_t rst, int8_t en = -1);
 
 	int init();
-	
-	char* firmwareVersion();
+
+	char *firmwareVersion();
 
 	/* Start Wifi connection with WPA/WPA2 encryption.
 	 *
@@ -94,11 +99,13 @@ public:
 	 */
 	uint8_t begin();
 	uint8_t begin(const char *ssid);
-	uint8_t begin(const char *ssid, uint8_t key_idx, const char* key);
+	uint8_t begin(const char *ssid, uint8_t key_idx, const char *key);
 	uint8_t begin(const char *ssid, const char *key);
 	uint8_t begin(const String &ssid) { return begin(ssid.c_str()); }
 	uint8_t begin(const String &ssid, uint8_t key_idx, const String &key) { return begin(ssid.c_str(), key_idx, key.c_str()); }
 	uint8_t begin(const String &ssid, const String &key) { return begin(ssid.c_str(), key.c_str()); }
+
+	uint8_t startConnect(const char *ssid, uint8_t u8SecType, const void *pvAuthInfo);
 
 	/* Start Wifi in Access Point, with open security.
 	 * Only one client can connect to the AP at a time.
@@ -108,10 +115,10 @@ public:
 	 */
 	uint8_t beginAP(const char *ssid);
 	uint8_t beginAP(const char *ssid, uint8_t channel);
-	uint8_t beginAP(const char *ssid, uint8_t key_idx, const char* key);
-	uint8_t beginAP(const char *ssid, uint8_t key_idx, const char* key, uint8_t channel);
-	uint8_t beginAP(const char *ssid, const char* key);
-	uint8_t beginAP(const char *ssid, const char* key, uint8_t channel);
+	uint8_t beginAP(const char *ssid, uint8_t key_idx, const char *key);
+	uint8_t beginAP(const char *ssid, uint8_t key_idx, const char *key, uint8_t channel);
+	uint8_t beginAP(const char *ssid, const char *key);
+	uint8_t beginAP(const char *ssid, const char *key, uint8_t channel);
 
 	uint8_t beginProvision();
 	uint8_t beginProvision(uint8_t channel);
@@ -123,7 +130,7 @@ public:
 	void config(IPAddress local_ip, IPAddress dns_server, IPAddress gateway);
 	void config(IPAddress local_ip, IPAddress dns_server, IPAddress gateway, IPAddress subnet);
 
-	void hostname(const char* name);
+	void hostname(const char *name);
 
 	void disconnect();
 	void end();
@@ -133,24 +140,24 @@ public:
 	uint32_t localIP();
 	uint32_t subnetMask();
 	uint32_t gatewayIP();
-	char* SSID();
+	char *SSID();
 	int32_t RSSI();
 	uint8_t encryptionType();
-	uint8_t* BSSID(uint8_t* bssid);
-	uint8_t* APClientMacAddress(uint8_t* mac);
+	uint8_t *BSSID(uint8_t *bssid);
+	uint8_t *APClientMacAddress(uint8_t *mac);
 	int8_t scanNetworks();
-	char* SSID(uint8_t pos);
+	char *SSID(uint8_t pos);
 	int32_t RSSI(uint8_t pos);
 	uint8_t encryptionType(uint8_t pos);
-	uint8_t* BSSID(uint8_t pos, uint8_t* bssid);
+	uint8_t *BSSID(uint8_t pos, uint8_t *bssid);
 	uint8_t channel(uint8_t pos);
 
 	uint8_t status();
 
-	int hostByName(const char* hostname, IPAddress& result);
-	int hostByName(const String &hostname, IPAddress& result) { return hostByName(hostname.c_str(), result); }
+	int hostByName(const char *hostname, IPAddress &result);
+	int hostByName(const String &hostname, IPAddress &result) { return hostByName(hostname.c_str(), result); }
 
-	int ping(const char* hostname, uint8_t ttl = 128);
+	int ping(const char *hostname, uint8_t ttl = 128);
 	int ping(const String &hostname, uint8_t ttl = 128);
 	int ping(IPAddress host, uint8_t ttl = 128);
 
@@ -163,7 +170,7 @@ public:
 	void noLowPowerMode(void);
 
 	void handleEvent(uint8_t u8MsgType, void *pvMsg);
-	void handleResolve(uint8_t * hostName, uint32_t hostIp);
+	void handleResolve(uint8_t *hostName, uint32_t hostIp);
 	void handlePingResponse(uint32 u32IPAddr, uint32 u32RTT, uint8 u8ErrorCode);
 	void setTimeout(unsigned long timeout);
 
@@ -185,9 +192,9 @@ private:
 	char _ssid[M2M_MAX_SSID_LEN];
 	unsigned long _timeout;
 
-	uint8_t startConnect(const char *ssid, uint8_t u8SecType, const void *pvAuthInfo);
+	// uint8_t startConnect(const char *ssid, uint8_t u8SecType, const void *pvAuthInfo);
 	uint8_t startAP(const char *ssid, uint8_t u8SecType, const void *pvAuthInfo, uint8_t channel);
-	uint8_t* remoteMacAddress(uint8_t* remoteMacAddress);
+	uint8_t *remoteMacAddress(uint8_t *remoteMacAddress);
 
 	uint8_t startProvision(const char *ssid, const char *url, uint8_t channel);
 };
